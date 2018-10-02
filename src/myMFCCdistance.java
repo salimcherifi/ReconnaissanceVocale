@@ -3,21 +3,29 @@ import fr.enseeiht.danck.voice_analyzer.MFCCHelper;
 
 public class myMFCCdistance extends MFCCHelper {
 
-	@Override
-	public float distance(MFCC mfcc1, MFCC mfcc2) {
-		// calcule la distance entre 2 MFCC
-		float dMfcc1 = distanceVectorielle(mfcc1);
-		float dMfcc2 = distanceVectorielle(mfcc2);
+//	@Override
+//	public float distance(MFCC mfcc1, MFCC mfcc2) {
+//		// calcule la distance entre 2 MFCC
+//		float dMfcc1 = distanceVectorielle(mfcc1);
+//		float dMfcc2 = distanceVectorielle(mfcc2);
+//
+//		return Math.abs(dMfcc1-dMfcc2);
+//	}
+//
+//	private float distanceVectorielle(MFCC mfcc){
+//	    float prodScal = 0.f;
+//		for(int i = 0; i < mfcc.getLength(); i++){
+//            prodScal += mfcc.getCoef(i);
+//		}
+//		return prodScal;
+//	}
 
-		return Math.abs(dMfcc1-dMfcc2);
-	}
-
-	private float distanceVectorielle(MFCC mfcc){
-	    float prodScal = 0.f;
-		for(int i = 0; i < mfcc.getLength(); i++){
-            prodScal += mfcc.getCoef(i);
+	public float distance(MFCC mfcc1, MFCC mfcc2){
+		float c = 0.f;
+		for (int i = 0; i < 13; i++) {
+			c += Math.pow(mfcc2.getCoef(i)-mfcc1.getCoef(i),2);
 		}
-		return prodScal;
+		return (float)Math.sqrt(c);
 	}
 
 	@Override
