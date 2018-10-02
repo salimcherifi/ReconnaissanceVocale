@@ -6,6 +6,7 @@ public class myDTW extends DTWHelper {
 	public float DTWDistance(Field unknown, Field known) {
 		// Methode qui calcule le score de la DTW
 		// entre 2 ensembles de MFCC
+//test
 
         int w0 = 1;
         int w1 = 2;
