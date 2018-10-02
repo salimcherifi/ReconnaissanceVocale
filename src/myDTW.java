@@ -28,7 +28,7 @@ public class myDTW extends DTWHelper {
                 dtw[i][j] = Math.min(dtw[i-1][j] + w0 * d,Math.min(dtw[i-1][j-1] + w1 * d, dtw[i][j-1] + w2 * d));
             }
         }
-
+caca
 		return(dtw[unknown.getLength()][known.getLength()]/(known.getLength()+unknown.getLength()));
 	}
 }
