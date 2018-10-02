@@ -29,7 +29,12 @@ public class myMFCCdistance extends MFCCHelper {
 		// passee en parametre
 		float[] newMFCCtab = new float[13];
 		for (int i = 0; i < 13; i++) {
-			newMFCCtab[i] = mfcc.getCoef(i)-noise.getCoef(i);
+			float substract = mfcc.getCoef(i)-noise.getCoef(i);
+
+			if (substract < 0){
+				substract = 0.f;
+			}
+			newMFCCtab[i] = substract;
 		}
 		MFCC newMFCC = new MFCC(newMFCCtab,null);
 		return newMFCC;
