@@ -3,22 +3,7 @@ import fr.enseeiht.danck.voice_analyzer.MFCCHelper;
 
 public class myMFCCdistance extends MFCCHelper {
 
-//	@Override
-//	public float distance(MFCC mfcc1, MFCC mfcc2) {
-//		// calcule la distance entre 2 MFCC
-//		float dMfcc1 = distanceVectorielle(mfcc1);
-//		float dMfcc2 = distanceVectorielle(mfcc2);
-//
-//		return Math.abs(dMfcc1-dMfcc2);
-//	}
-//
-//	private float distanceVectorielle(MFCC mfcc){
-//	    float prodScal = 0.f;
-//		for(int i = 0; i < mfcc.getLength(); i++){
-//            prodScal += mfcc.getCoef(i);
-//		}
-//		return prodScal;
-//	}
+
 
 	public float distance(MFCC mfcc1, MFCC mfcc2){
 		float c = 0.f;
@@ -26,6 +11,7 @@ public class myMFCCdistance extends MFCCHelper {
 			c += Math.pow(mfcc2.getCoef(i)-mfcc1.getCoef(i),2);
 		}
 		return (float)Math.sqrt(c);
+
 	}
 
 	@Override
@@ -33,7 +19,7 @@ public class myMFCCdistance extends MFCCHelper {
 		// retourne la valeur de mesure de la MFCC (coef d'indice 0 dans la MFCC) 
 		// cette mesure permet de determiner s'il s'agit d'un mot ou d'un silence
 		
-		return 0;
+		return mfcc.getCoef(0);
 	}
 
 	@Override
@@ -41,8 +27,12 @@ public class myMFCCdistance extends MFCCHelper {
 		// supprime le bruit de la MFCC passee en parametre
 		// soustrait chaque coef du bruit a chaque coef du la MFCC 
 		// passee en parametre
-		
-		return null;
+		float[] newMFCCtab = new float[13];
+		for (int i = 0; i < 13; i++) {
+			newMFCCtab[i] = mfcc.getCoef(i)-noise.getCoef(i);
+		}
+		MFCC newMFCC = new MFCC(newMFCCtab,null);
+		return newMFCC;
 	}
 
 }
