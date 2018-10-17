@@ -7,7 +7,7 @@ public class myMFCCdistance extends MFCCHelper {
 
 	public float distance(MFCC mfcc1, MFCC mfcc2){
 		float c = 0.f;
-		for (int i = 0; i < 13; i++) {
+		for (int i = 0; i < mfcc1.getLength(); i++) {
 			c += Math.pow(mfcc2.getCoef(i)-mfcc1.getCoef(i),2);
 		}
 		return (float)Math.sqrt(c);
