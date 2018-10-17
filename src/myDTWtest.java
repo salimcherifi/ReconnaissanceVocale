@@ -76,7 +76,7 @@ public class myDTWtest {
 
 
         DTWHelper myDTWHelper = new myDTW();
-        ((myDTW) myDTWHelper).getFilesFromFolder("./corpus/");
+        //((myDTW) myDTWHelper).getFilesFromFolder("./corpus/");
 
 
     }
