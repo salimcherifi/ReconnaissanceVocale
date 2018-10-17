@@ -134,7 +134,7 @@ public class myDTW extends DTWHelper {
         int k = 0;
         for (int i = 0; i < folder1Length; i++) {
             for (int j = 0; j < folder2Length; j++) {
-                float distance = calcDistanceField(getFieldMFCCs(files1[i]),getFieldMFCCs(files2[j]));
+                float distance = calcDistanceField(getFieldMFCCs("/"+folder1+"/"+files1[i]),getFieldMFCCs("/"+folder2+"/"+files2[j]));
                 if (distance < valMin){
                     valMin = distance;
                 }
@@ -169,6 +169,7 @@ public class myDTW extends DTWHelper {
                 }
 
             }
+            System.out.println("min trouve");
             matriceConf[referencesOfMin][testsOfMin]+=1;
         }
 
