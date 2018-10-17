@@ -116,16 +116,20 @@ public class myDTW extends DTWHelper {
     }
 
 
-    public void distanceFolders(String folder1, String folder2){
+    public void distanceFolders(String folder1, String folder2) throws IOException, InterruptedException {
         int folder1Length = new File(folder1).listFiles().length;
         int folder2Length = new File(folder2).listFiles().length;
         String[] files1 = getFilesFromFolder(folder1,"file");
         String[] files2 = getFilesFromFolder(folder2,"file");
-        float[] distances = new float[folder1Length*folder2Length];
+        String min;
+        float valMin = Float.MAX_VALUE;
         int k = 0;
         for (int i = 0; i < folder1Length; i++) {
             for (int j = 0; j < folder2Length; j++) {
-//                distances[k] = getFieldMFCCs()
+                float distance = calcDistanceField(getFieldMFCCs(files1[i]),getFieldMFCCs(files2[j]));
+                if (distance < valMin){
+                    min = files1[i]+":"+files2[j];
+                }
             }
         }
     }
