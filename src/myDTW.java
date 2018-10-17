@@ -146,9 +146,6 @@ public class myDTW extends DTWHelper {
         tests = getFilesFromFolder(folderTest,"folder");
 
         Float[][] matriceConf = new Float[nbOrdre][nbOrdre];
-        for(int i = 0; i < tests.length; i++)
-            for(int j = 0; j < references.length; j++)
-                distanceFolders(tests[i],references[j]);
         float min;
         float value;
         int referencesOfMin = 0;
