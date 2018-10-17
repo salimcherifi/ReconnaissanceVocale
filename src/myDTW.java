@@ -36,7 +36,7 @@ public class myDTW extends DTWHelper {
     }
 
 
-    public void getFilesFromFolder(String folderPath) {
+    public String[] getFilesFromFolder(String folderPath) {
         File folder = new File(folderPath);
         File[] listOfFiles = folder.listFiles();
         StringBuffer files = new StringBuffer();
@@ -54,11 +54,17 @@ public class myDTW extends DTWHelper {
 
     public float[][] matriceConfusion(String folderRef, String folderTest) {
         int nbOrdre = 14;
-        int nbFileRef;
-        int nbFileTest;
+        String[] references = new String[];
+        references = getFilesFromFolder(folderRef);
+
+        String[] tests = new String[];
+        tests = getFilesFromFolder(folderTest);
+
         Float[][] matriceConf = new Float[nbOrdre][nbOrdre];
         for(int i = 0; i < nbOrdre; i++){
-            for(int j = 0, j < nbOrdre; j++)
+            for(int j = 0; j < nbOrdre; j++){
+                System.out.print("aaaaaaaaaaaaaaaaaa");
+            }
         }
         return matriceConf;
     }
