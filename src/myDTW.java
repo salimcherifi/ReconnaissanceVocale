@@ -36,24 +36,39 @@ public class myDTW extends DTWHelper {
     }
 
 
-    public String getFilesFromFolder(String folderPath) {
+    public String[] getFilesFromFolder(String folderPath, String choice) {
         File folder = new File(folderPath);
         File[] listOfFiles = folder.listFiles();
-        StringBuffer files = new StringBuffer();
+        String[] myFiles = new String[listOfFiles.length];
+        String[] myFolders = new String[listOfFiles.length];
 
 
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
-                files.append(listOfFiles[i].getName());
+                myFiles[i] = listOfFiles[i].getName();
+            }else{
+                myFolders[i] = listOfFiles[i].getName();
             }
         }
-        return (files.toString());
+        if (choice.equals("file")){
+            return myFiles;
+        }else{
+            return myFolders;
+        }
     }
 
 
-//    public void distanceFolders(String folder1, String folder2){
-//        int folder1Length = new File(folder1)
-//    }
+    public void distanceFolders(String folder1, String folder2){
+        int folder1Length = new File(folder1).listFiles().length;
+        int folder2Length = new File(folder2).listFiles().length;
+
+
+        for (int i = 0; i < folder1Length; i++) {
+            for (int j = 0; j < folder2Length; j++) {
+                
+            }
+        }
+    }
 
     public float[][] matriceConfusion(String folderRef, String folderTest) {
         return new float[0][];
