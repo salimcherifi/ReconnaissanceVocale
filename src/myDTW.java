@@ -49,8 +49,9 @@ public class myDTW extends DTWHelper {
         }
     }
 
-
-
+    public float[][] matriceConfusion(String folderRef, String folderTest) {
+        return new float[0][];
+    }
 
 }
 
