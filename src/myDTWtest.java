@@ -52,17 +52,21 @@ public class myDTWtest {
         return fichierField;
     }
 
-
+    static float calcDistanceField(Field f1, Field f2){
+        DTWHelper myDTWHelper = new myDTW();
+        DTWHelper DTWHelperDefault = new DTWHelperDefault();
+        float distance = myDTWHelper.DTWDistance(f1, f2);
+        return distance;
+    }
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        DTWHelper myDTWHelper = new myDTW();
-        DTWHelper DTWHelperDefault = new DTWHelperDefault();
+
         String nomF1 = "/corpus/dronevolant_nonbruite/F01_avance.csv";
         String nomF2 = "/myAudio/avance.csv";
         Field f1 = getFieldMFCCs(nomF1);
         Field f2 = getFieldMFCCs(nomF2);
-        float distance = myDTWHelper.DTWDistance(f1, f2);
+        float distance = calcDistanceField(f1, f2);
 
 
         System.out.println("Distance entre "+nomF1+"      et      "+nomF2+" :        " + distance);
