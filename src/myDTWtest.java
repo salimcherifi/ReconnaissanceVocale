@@ -59,6 +59,9 @@ public class myDTWtest {
         return distance;
     }
 
+
+
+
     public static void main(String[] args) throws IOException, InterruptedException {
 
 
@@ -70,6 +73,11 @@ public class myDTWtest {
 
 
         System.out.println("Distance entre "+nomF1+"      et      "+nomF2+" :        " + distance);
+
+
+        DTWHelper myDTWHelper = new myDTW();
+        ((myDTW) myDTWHelper).getFilesFromFolder("./corpus/");
+
 
     }
 }

@@ -1,6 +1,8 @@
 import fr.enseeiht.danck.voice_analyzer.DTWHelper;
 import fr.enseeiht.danck.voice_analyzer.Field;
 
+import java.io.File;
+
 public class myDTW extends DTWHelper {
 
     public float DTWDistance(Field unknown, Field known) {
@@ -32,6 +34,23 @@ public class myDTW extends DTWHelper {
         }
         return (dtw[unknown.getLength()][known.getLength()] / (known.getLength() + unknown.getLength()));
     }
+
+
+    public void getFilesFromFolder(String folderPath) {
+        File folder = new File(folderPath);
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                System.out.println(listOfFiles[i].getName());
+            } else if (listOfFiles[i].isDirectory()) {
+                System.out.println(listOfFiles[i].getName());
+            }
+        }
+    }
+
+
+
 
 }
 
