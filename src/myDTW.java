@@ -39,18 +39,21 @@ public class myDTW extends DTWHelper {
     public void getFilesFromFolder(String folderPath) {
         File folder = new File(folderPath);
         File[] listOfFiles = folder.listFiles();
-
+        StringBuffer files = new StringBuffer();
+        StringBuffer folders = new StringBuffer();
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
-                System.out.println(listOfFiles[i].getName());
+                files.append(listOfFiles[i].getName());
             } else if (listOfFiles[i].isDirectory()) {
-                System.out.println(listOfFiles[i].getName());
+                folders.append(listOfFiles[i].getName());
             }
         }
+
     }
 
-
-
+//    public float DTWDistanceFolders(String folder1, String folder2){
+//        String
+//    }
 
 }
 
