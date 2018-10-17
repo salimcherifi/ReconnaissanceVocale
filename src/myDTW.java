@@ -140,10 +140,8 @@ public class myDTW extends DTWHelper {
 
         Float[][] matriceConf = new Float[nbOrdre][nbOrdre];
         for(int i = 0; i < tests.length; i++){
-            String[] testsFiles = getFilesFromFolder(tests[i],"file");
             for(int j = 0; j < references.length; j++){
-                String[] refFiles = getFilesFromFolder(references[i],"file");
-                // Calcul des distances avec chaque fichier
+
             }
         }
 
