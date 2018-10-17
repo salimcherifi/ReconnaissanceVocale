@@ -50,8 +50,13 @@ public class myDTW extends DTWHelper {
     }
 
     public float[][] matriceConfusion(String folderRef, String folderTest) {
-        return new float[0][];
+        int nbOrdre = 14;
+        int nbFileRef;
+        int nbFileTest;
+        Float[][] matriceConf = new Float[nbOrdre][nbOrdre];
+        for(int i = 0; i < nbOrdre; i++){
+            for(int j = 0, j < nbOrdre; j++)
+        }
+        return matriceConf;
     }
-
 }
-
