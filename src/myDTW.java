@@ -51,9 +51,16 @@ public class myDTW extends DTWHelper {
     }
 
 
-//    public void distanceFolders(String folder1, String folder2){
-//        int folder1Length = new File(folder1)
-//    }
+    public void distanceFolders(String folder1, String folder2){
+        int folder1Length = new File(folder1).listFiles().length;
+        int folder2Length = new File(folder2).listFiles().length;
+
+        for (int i = 0; i < folder1Length; i++) {
+            for (int j = 0; j < folder2Length; j++) {
+                
+            }
+        }
+    }
 
     public float[][] matriceConfusion(String folderRef, String folderTest) {
         return new float[0][];
