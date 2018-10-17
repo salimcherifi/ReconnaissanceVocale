@@ -97,30 +97,38 @@ public class myDTW extends DTWHelper {
     public String[] getFilesFromFolder(String folderPath, String choice) {
         File folder = new File(folderPath);
         File[] listOfFiles = folder.listFiles();
-        String[] myFiles = new String[listOfFiles.length];
-        String[] myFolders = new String[listOfFiles.length];
-
+        int indFiles = 0;
+        int indFolders = 0;
+        List<String> myFolders = new ArrayList<>();
+        List<String> myFiles = new ArrayList<>();
 
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
-                myFiles[i] = listOfFiles[i].getName();
+                myFiles.add(listOfFiles[i].getName());
+                indFiles++;
             }else{
-                myFolders[i] = listOfFiles[i].getName();
+                myFolders.add(listOfFiles[i].getName());
+                indFolders++;
             }
         }
         if (choice.equals("file")){
-            return myFiles;
+            return myFiles.toArray(new String[0]);
+        }else if (choice.equals("folder")){
+            return myFolders.toArray(new String[0]);
         }else{
-            return myFolders;
+            return null;
         }
     }
 
 
     public float distanceFolders(String folder1, String folder2) throws IOException, InterruptedException {
-        int folder1Length = new File(folder1).listFiles().length;
-        int folder2Length = new File(folder2).listFiles().length;
+
+
         String[] files1 = getFilesFromFolder(folder1,"file");
         String[] files2 = getFilesFromFolder(folder2,"file");
+        int folder1Length = files1.length;
+        int folder2Length = files2.length;
+
         float min;
         float valMin = Float.MAX_VALUE;
         int k = 0;
@@ -154,7 +162,7 @@ public class myDTW extends DTWHelper {
         for(int i = 0; i < references.length; i++){
             min = Float.MAX_VALUE;
             for(int j = 0; j < tests.length; j++){
-                value = distanceFolders(tests[j],references[i]);
+                value = distanceFolders(folderRef+tests[j],folderRef+references[i]);
                 if (value < min){
                     referencesOfMin = i;
                     testsOfMin = j;

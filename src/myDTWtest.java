@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import fr.enseeiht.danck.voice_analyzer.DTWHelper;
@@ -27,7 +28,8 @@ public class myDTWtest {
 //
 //        System.out.println("Distance entre "+nomF1+"      et      "+nomF2+" :        " + distance);
 
-        dtw.matriceConfusion("./corpus/dronevolant_nonbruite","./corpus/dronevolant_nonbruite");
+        dtw.matriceConfusion("corpus/dronevolant_nonbruite/","corpus/dronevolant_nonbruite/");
+//        String[] files = dtw.getFilesFromFolder("corpus/dronevolant_nonbruite","file");
 
 
 
