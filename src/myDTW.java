@@ -70,9 +70,23 @@ public class myDTW extends DTWHelper {
         }
     }
 
-    public float[][] matriceConfusion(String folderRef, String folderTest) {
-        return new float[0][];
+    public Float[][] matriceConfusion(String folderRef, String folderTest) {
+        int nbOrdre = 14;
+        String[] references = new String[nbOrdre];
+        references = getFilesFromFolder(folderRef,"folder");
+
+        String[] tests = new String[nbOrdre];
+        tests = getFilesFromFolder(folderTest,"folder");
+
+        Float[][] matriceConf = new Float[nbOrdre][nbOrdre];
+        for(int i = 0; i < tests.length; i++){
+            String[] testsFiles = getFilesFromFolder(tests[i],"file");
+            for(int j = 0; j < references.length; j++){
+                String[] refFiles = getFilesFromFolder(references[i],"file");
+                // Calcul des distances avec chaque fichier
+            }
+        }
+
+        return matriceConf;
     }
-
 }
-
