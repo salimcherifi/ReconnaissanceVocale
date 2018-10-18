@@ -49,7 +49,7 @@ public class myDTW extends DTWHelper {
         return 2 * Math.floorDiv(counter, 512);
     }
 
-    public Field getFieldMFCCs(String fichier) throws IOException, InterruptedException{
+    public Field getFieldMFCCs(String fichier) throws IOException, InterruptedException {
 
         int MFCCLength;
         DTWHelper myDTWHelper = new myDTW();
@@ -77,21 +77,12 @@ public class myDTW extends DTWHelper {
         return fichierField;
     }
 
-    public float calcDistanceField(Field f1, Field f2){
+    public float calcDistanceField(Field f1, Field f2) {
         DTWHelper myDTWHelper = new myDTW();
         DTWHelper DTWHelperDefault = new DTWHelperDefault();
         float distance = myDTWHelper.DTWDistance(f1, f2);
         return distance;
     }
-
-
-
-
-
-
-
-
-
 
 
     public String[] getFilesFromFolder(String folderPath, String choice) {
@@ -106,16 +97,16 @@ public class myDTW extends DTWHelper {
             if (listOfFiles[i].isFile()) {
                 myFiles.add(listOfFiles[i].getName());
                 indFiles++;
-            }else{
+            } else {
                 myFolders.add(listOfFiles[i].getName());
                 indFolders++;
             }
         }
-        if (choice.equals("file")){
+        if (choice.equals("file")) {
             return myFiles.toArray(new String[0]);
-        }else if (choice.equals("folder")){
+        } else if (choice.equals("folder")) {
             return myFolders.toArray(new String[0]);
-        }else{
+        } else {
             return null;
         }
     }
@@ -124,8 +115,8 @@ public class myDTW extends DTWHelper {
     public float distanceFolders(String folder1, String folder2) throws IOException, InterruptedException {
 
 
-        String[] files1 = getFilesFromFolder(folder1,"file");
-        String[] files2 = getFilesFromFolder(folder2,"file");
+        String[] files1 = getFilesFromFolder(folder1, "file");
+        String[] files2 = getFilesFromFolder(folder2, "file");
         int folder1Length = files1.length;
         int folder2Length = files2.length;
 
@@ -134,8 +125,8 @@ public class myDTW extends DTWHelper {
         int k = 0;
         for (int i = 0; i < folder1Length; i++) {
             for (int j = 0; j < folder2Length; j++) {
-                float distance = calcDistanceField(getFieldMFCCs("/"+folder1+"/"+files1[i]),getFieldMFCCs("/"+folder2+"/"+files2[j]));
-                if (distance < valMin){
+                float distance = calcDistanceField(getFieldMFCCs("/" + folder1 + "/" + files1[i]), getFieldMFCCs("/" + folder2 + "/" + files2[j]));
+                if (distance < valMin) {
                     valMin = distance;
                 }
             }
@@ -144,14 +135,13 @@ public class myDTW extends DTWHelper {
     }
 
 
-
     public Float[][] matriceConfusion(String folderRef, String folderTest) throws IOException, InterruptedException {
         int nbOrdre = 14;
         String[] references = new String[nbOrdre];
-        references = getFilesFromFolder(folderRef,"folder");
+        references = getFilesFromFolder(folderRef, "folder");
 
         String[] tests = new String[nbOrdre];
-        tests = getFilesFromFolder(folderTest,"folder");
+        tests = getFilesFromFolder(folderTest, "folder");
 
         Float[][] matriceConf = new Float[nbOrdre][nbOrdre];
         float min;
@@ -159,18 +149,17 @@ public class myDTW extends DTWHelper {
         int referencesOfMin = 0;
         int testsOfMin = 0;
 
-        for(int i = 0; i < references.length; i++){
+        for (int i = 0; i < references.length; i++) {
             min = Float.MAX_VALUE;
-            for(int j = 0; j < tests.length; j++){
-                value = distanceFolders(folderRef+tests[j],folderRef+references[i]);
-                if (value < min){
+            for (int j = 0; j < tests.length; j++) {
+                value = distanceFolders(folderRef + tests[j], folderRef + references[i]);
+                if (value < min) {
                     referencesOfMin = i;
                     testsOfMin = j;
                 }
 
             }
-            System.out.println("min trouve");
-            matriceConf[referencesOfMin][testsOfMin]+=1;
+            matriceConf[referencesOfMin][testsOfMin] += 1;
         }
 
         return matriceConf;
