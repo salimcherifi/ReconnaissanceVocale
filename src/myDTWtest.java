@@ -17,16 +17,16 @@ public class myDTWtest {
 //
 //        System.out.println("Distance entre "+nomF1+"      et      "+nomF2+" :        " + distance);
 
-        float[][] matrice = dtw.matriceConfusion("corpus/dronevolant_nonbruite/","corpus/dronevolant_nonbruite/");
+        //float[][] matrice = dtw.matriceConfusion("corpus/dronevolant_nonbruite/","corpus/dronevolant_nonbruite/");
 //        String[] files = dtw.getFilesFromFolder("corpus/dronevolant_nonbruite","file");
-        for (int i = 0; i < 11; i++) {
-            for (int j = 0; j < 11; j++) {
-                System.out.print(" "+matrice[i][j]+" ");
-            }
-            System.out.println("");
-        }
+//        for (int i = 0; i < 11; i++) {
+//            for (int j = 0; j < 11; j++) {
+//                System.out.print(" "+matrice[i][j]+" ");
+//            }
+//            System.out.println("");
+//        }
 
-
+        dtw.distanceFolders("/corpus/dronevolant_nonbruite/avance/F01_avance.csv","/corpus/dronevolant_nonbruite/");
     }
 }
 
