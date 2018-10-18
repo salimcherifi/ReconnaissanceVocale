@@ -113,13 +113,6 @@ public class myDTW extends DTWHelper {
 
 
 
-
-
-
-
-
-
-
     //Comparer un fichier avec un dossier
 
     public float distanceFolders(String file1, String folder2) throws IOException, InterruptedException {
