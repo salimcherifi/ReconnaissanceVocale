@@ -16,7 +16,7 @@ public class myDTWtest {
 //
 //        System.out.println("Distance entre "+nomF1+"      et      "+nomF2+" :        " + distance);
         int nbOrdre = 12;
-        float[][] matrice = dtw.matriceConfusion("corpus/dronevolant_nonbruite/","corpus/dronevolant_nonbruite/", nbOrdre);
+        float[][] matrice = dtw.matriceConfusion("corpusReduit/","myAudio/", nbOrdre);
         for (int i = 0; i < nbOrdre; i++) {
             for (int j = 0; j < nbOrdre; j++) {
                 System.out.print(" "+matrice[i][j]+" ");

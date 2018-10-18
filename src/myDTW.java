@@ -124,7 +124,7 @@ public class myDTW extends DTWHelper {
 
         float valMin = Float.MAX_VALUE;
         for (String aFiles2 : files2) {
-            //System.out.println(file1 + "       "+ files2[i]);
+            System.out.println(file1 + "       "+ aFiles2);
             Field fileFromFolder = getFieldMFCCs("/" + folder2 + "/" + aFiles2);
             float distance = calcDistanceField(fieldFile1, fileFromFolder);
             if (distance < valMin) {
@@ -137,8 +137,8 @@ public class myDTW extends DTWHelper {
 
 
     public float[][] matriceConfusion(String folderRef, String folderTest, int nbOrdre) throws IOException, InterruptedException {
-        int referencesOfMin = 0;
-        int testsOfMin = 0;
+        int x = 0;
+        int y = 0;
 
         float min;
         float distance = 0.f;
@@ -165,14 +165,12 @@ public class myDTW extends DTWHelper {
                     distance = distanceFolders(pathFile, pathFolder);
                     if (distance < min) {
                         min = distance;
-                        referencesOfMin = j;
-                        testsOfMin = i;
+                        x = j;
+                        y = i;
                     }
                 }
-                matriceConf[referencesOfMin][testsOfMin] += 1;
+                matriceConf[x][y] += 1;
             }
-
-
         }
 
         return matriceConf;
