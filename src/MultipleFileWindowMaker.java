@@ -35,7 +35,7 @@ public final class MultipleFileWindowMaker implements WindowMaker {
 	}
 
 	@Override
-	public float[] nextWindow() throws InterruptedException {
+	public float[] nextWindow() {
 		float[] window = new float[WINDOW_SIZE];
 
         for (int i = 0; i < window.length; i++) {
@@ -46,7 +46,6 @@ public final class MultipleFileWindowMaker implements WindowMaker {
             }
         }
         this.cursor += window.length / 2;
-        // System.out.print(2*cursor/window.length + "-");
 
         return window;
 	}

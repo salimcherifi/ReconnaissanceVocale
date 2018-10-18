@@ -36,8 +36,7 @@ public class myMFCCdistance extends MFCCHelper {
 			}
 			newMFCCtab[i] = substract;
 		}
-		MFCC newMFCC = new MFCC(newMFCCtab,null);
-		return newMFCC;
+		return new MFCC(newMFCCtab,null);
 	}
 
 }

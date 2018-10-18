@@ -40,7 +40,7 @@ public class myDTW extends DTWHelper {
         return (dtw[unknown.getLength()][known.getLength()] / (known.getLength() + unknown.getLength()));
     }
 
-    public int FieldLength(String fileName) throws IOException {
+    private int FieldLength(String fileName) throws IOException {
         int counter = 0;
         File file = new File(System.getProperty("user.dir") + fileName);
         for (String line : Files.readAllLines(file.toPath(), Charset.defaultCharset())) {
@@ -49,11 +49,9 @@ public class myDTW extends DTWHelper {
         return 2 * Math.floorDiv(counter, 512);
     }
 
-    public Field getFieldMFCCs(String fichier) throws IOException, InterruptedException {
+    private Field getFieldMFCCs(String fichier) throws IOException, InterruptedException {
 
         int MFCCLength;
-        DTWHelper myDTWHelper = new myDTW();
-        DTWHelper DTWHelperDefault = new DTWHelperDefault();
 
 
         // Appel a l'extracteur par defaut (calcul des MFCC)
@@ -72,38 +70,41 @@ public class myDTW extends DTWHelper {
             mfccs[i] = extractor.nextMFCC(windowMaker);
         }
         // Etape 3. Construction du Field (ensemble de MFCC) de alpha
-        Field fichierField = new Field(mfccs);
 
-        return fichierField;
+        return new Field(mfccs);
     }
 
-    public float calcDistanceField(Field f1, Field f2) {
+    private float calcDistanceField(Field f1, Field f2) {
         DTWHelper myDTWHelper = new myDTW();
-        DTWHelper DTWHelperDefault = new DTWHelperDefault();
-        float distance = myDTWHelper.DTWDistance(f1, f2);
-        return distance;
+        return myDTWHelper.DTWDistance(f1, f2);
     }
 
 
-    public String[] getFilesFromFolder(String folderPath, String choice) {
+    private String[] getFilesFromFolder(String folderPath, String choice) {
+        if (!(new File(folderPath).isDirectory())){
+            System.err.println("Ceci n'est pas un dossier!");
+            System.exit(-1);
+        }
         File folder = new File(folderPath);
         File[] listOfFiles = folder.listFiles();
         List<String> myFolders = new ArrayList<>();
         List<String> myFiles = new ArrayList<>();
 
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                myFiles.add(listOfFiles[i].getName());
+        assert listOfFiles != null;
+        for (File listOfFile : listOfFiles) {
+            if (listOfFile.isFile()) {
+                myFiles.add(listOfFile.getName());
             } else {
-                myFolders.add(listOfFiles[i].getName());
+                myFolders.add(listOfFile.getName());
             }
         }
-        if (choice.equals("file")) {
-            return myFiles.toArray(new String[0]);
-        } else if (choice.equals("folder")) {
-            return myFolders.toArray(new String[0]);
-        } else {
-            return null;
+        switch (choice) {
+            case "file":
+                return myFiles.toArray(new String[0]);
+            case "folder":
+                return myFolders.toArray(new String[0]);
+            default:
+                return null;
         }
     }
 
@@ -115,16 +116,16 @@ public class myDTW extends DTWHelper {
 
     //Comparer un fichier avec un dossier
 
-    public float distanceFolders(String file1, String folder2) throws IOException, InterruptedException {
+    private float distanceFolders(String file1, String folder2) throws IOException, InterruptedException {
 
         String[] files2 = getFilesFromFolder(folder2, "file");
-        Field fieldFile1 = getFieldMFCCs(file1);
+        Field fieldFile1 = getFieldMFCCs("/"+file1);
         int folder2Length = files2.length;
 
         float valMin = Float.MAX_VALUE;
-        for (int i = 0; i < folder2Length; i++) {
-            System.out.println(file1 + "       "+ files2[i]);
-            Field fileFromFolder = getFieldMFCCs("/" + folder2 + "/" + files2[i]);
+        for (String aFiles2 : files2) {
+            //System.out.println(file1 + "       "+ files2[i]);
+            Field fileFromFolder = getFieldMFCCs("/" + folder2 + "/" + aFiles2);
             float distance = calcDistanceField(fieldFile1, fileFromFolder);
             if (distance < valMin) {
                 valMin = distance;
@@ -135,34 +136,43 @@ public class myDTW extends DTWHelper {
     }
 
 
-    public float[][] matriceConfusion(String folderRef, String folderTest) throws IOException, InterruptedException {
-        int nbOrdre = 11;
-        String[] references = new String[nbOrdre];
-        references = getFilesFromFolder(folderRef, "folder");
-
-        String[] tests = new String[nbOrdre];
-        tests = getFilesFromFolder(folderTest, "folder");
-
-        float[][] matriceConf = new float[nbOrdre][nbOrdre];
-        float min;
-        float value;
+    public float[][] matriceConfusion(String folderRef, String folderTest, int nbOrdre) throws IOException, InterruptedException {
         int referencesOfMin = 0;
         int testsOfMin = 0;
 
-        for (int i = 0; i < references.length; i++) {
-            min = Float.MAX_VALUE;
-            referencesOfMin = 0;
-            testsOfMin = 0;
-            for (int j = 0; j < tests.length; j++) {
-                value = distanceFolders(folderRef + tests[j], folderRef + references[i]);
+        float min;
+        float distance = 0.f;
 
-                if (value < min) {
-                    min = value;
-                    referencesOfMin = i;
-                    testsOfMin = j;
+        String[] references = new String[nbOrdre];
+        String[] tests = new String[nbOrdre];
+
+        float[][] matriceConf = new float[nbOrdre][nbOrdre];
+
+
+        references = getFilesFromFolder(folderRef, "folder");
+        tests = getFilesFromFolder(folderTest, "folder");
+        int referencesLength = references.length;
+        int testsLength = tests.length;
+
+        for (int i = 0; i < testsLength; i++) {
+            String[] testsFiles = new String[nbOrdre];
+            testsFiles = getFilesFromFolder(folderTest+tests[i], "file");
+            min = Float.MAX_VALUE;
+            for (String testsFile : testsFiles) {
+                for (int j = 0; j < referencesLength; j++) {
+                    String pathFile = folderTest + "/" + tests[i] + "/" + testsFile;
+                    String pathFolder = folderRef + references[j];
+                    distance = distanceFolders(pathFile, pathFolder);
+                    if (distance < min) {
+                        min = distance;
+                        referencesOfMin = j;
+                        testsOfMin = i;
+                    }
                 }
+                matriceConf[referencesOfMin][testsOfMin] += 1;
             }
-            matriceConf[referencesOfMin][testsOfMin] += 1;
+
+
         }
 
         return matriceConf;
