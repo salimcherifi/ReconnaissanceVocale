@@ -1,17 +1,6 @@
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-import fr.enseeiht.danck.voice_analyzer.DTWHelper;
-import fr.enseeiht.danck.voice_analyzer.Extractor;
-import fr.enseeiht.danck.voice_analyzer.Field;
-import fr.enseeiht.danck.voice_analyzer.MFCC;
-import fr.enseeiht.danck.voice_analyzer.WindowMaker;
-import fr.enseeiht.danck.voice_analyzer.defaults.DTWHelperDefault;
+import java.io.IOException;
+import java.util.Arrays;
 
 public class myDTWtest {
 //protected static final int MFCCLength = 13;
@@ -28,9 +17,14 @@ public class myDTWtest {
 //
 //        System.out.println("Distance entre "+nomF1+"      et      "+nomF2+" :        " + distance);
 
-        dtw.matriceConfusion("corpus/dronevolant_nonbruite/","corpus/dronevolant_nonbruite/");
+        float[][] matrice = dtw.matriceConfusion("corpus/dronevolant_nonbruite/","corpus/dronevolant_nonbruite/");
 //        String[] files = dtw.getFilesFromFolder("corpus/dronevolant_nonbruite","file");
-
+        for (int i = 0; i < 11; i++) {
+            for (int j = 0; j < 11; j++) {
+                System.out.print(" "+matrice[i][j]+" ");
+            }
+            System.out.println("");
+        }
 
 
     }

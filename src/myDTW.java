@@ -88,18 +88,14 @@ public class myDTW extends DTWHelper {
     public String[] getFilesFromFolder(String folderPath, String choice) {
         File folder = new File(folderPath);
         File[] listOfFiles = folder.listFiles();
-        int indFiles = 0;
-        int indFolders = 0;
         List<String> myFolders = new ArrayList<>();
         List<String> myFiles = new ArrayList<>();
 
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
                 myFiles.add(listOfFiles[i].getName());
-                indFiles++;
             } else {
                 myFolders.add(listOfFiles[i].getName());
-                indFolders++;
             }
         }
         if (choice.equals("file")) {
@@ -114,7 +110,6 @@ public class myDTW extends DTWHelper {
 
     public float distanceFolders(String folder1, String folder2) throws IOException, InterruptedException {
 
-
         String[] files1 = getFilesFromFolder(folder1, "file");
         String[] files2 = getFilesFromFolder(folder2, "file");
         int folder1Length = files1.length;
@@ -125,6 +120,7 @@ public class myDTW extends DTWHelper {
         int k = 0;
         for (int i = 0; i < folder1Length; i++) {
             for (int j = 0; j < folder2Length; j++) {
+                System.out.println(files1[i] + "       "+ files2[j]);
                 float distance = calcDistanceField(getFieldMFCCs("/" + folder1 + "/" + files1[i]), getFieldMFCCs("/" + folder2 + "/" + files2[j]));
                 if (distance < valMin) {
                     valMin = distance;
@@ -135,15 +131,15 @@ public class myDTW extends DTWHelper {
     }
 
 
-    public Float[][] matriceConfusion(String folderRef, String folderTest) throws IOException, InterruptedException {
-        int nbOrdre = 14;
+    public float[][] matriceConfusion(String folderRef, String folderTest) throws IOException, InterruptedException {
+        int nbOrdre = 11;
         String[] references = new String[nbOrdre];
         references = getFilesFromFolder(folderRef, "folder");
 
         String[] tests = new String[nbOrdre];
         tests = getFilesFromFolder(folderTest, "folder");
 
-        Float[][] matriceConf = new Float[nbOrdre][nbOrdre];
+        float[][] matriceConf = new float[nbOrdre][nbOrdre];
         float min;
         float value;
         int referencesOfMin = 0;
@@ -151,13 +147,16 @@ public class myDTW extends DTWHelper {
 
         for (int i = 0; i < references.length; i++) {
             min = Float.MAX_VALUE;
+            referencesOfMin = 0;
+            testsOfMin = 0;
             for (int j = 0; j < tests.length; j++) {
                 value = distanceFolders(folderRef + tests[j], folderRef + references[i]);
+
                 if (value < min) {
+                    min = value;
                     referencesOfMin = i;
                     testsOfMin = j;
                 }
-
             }
             matriceConf[referencesOfMin][testsOfMin] += 1;
         }
