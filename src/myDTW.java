@@ -49,7 +49,7 @@ public class myDTW extends DTWHelper {
         return 2 * Math.floorDiv(counter, 512);
     }
 
-    private Field getFieldMFCCs(String fichier) throws IOException, InterruptedException {
+    public Field getFieldMFCCs(String fichier) throws IOException, InterruptedException {
 
         int MFCCLength;
 
@@ -74,13 +74,13 @@ public class myDTW extends DTWHelper {
         return new Field(mfccs);
     }
 
-    private float calcDistanceField(Field f1, Field f2) {
+    public float calcDistanceField(Field f1, Field f2) {
         DTWHelper myDTWHelper = new myDTW();
         return myDTWHelper.DTWDistance(f1, f2);
     }
 
 
-    private String[] getFilesFromFolder(String folderPath, String choice) {
+    public String[] getFilesFromFolder(String folderPath, String choice) {
         if (!(new File(folderPath).isDirectory())){
             System.err.println("Ceci n'est pas un dossier!");
             System.exit(-1);
@@ -136,10 +136,10 @@ public class myDTW extends DTWHelper {
     }
 
 
-    public float[][] matriceConfusion(String folderRef, String folderTest, int nbOrdre) throws IOException, InterruptedException {
+    public float[][] matriceConfusion(String folderRef, String folderTest) throws IOException, InterruptedException {
         int x = 0;
         int y = 0;
-
+        int nbOrdre = 50; //Taille max du tableau
         float min;
         float distance = 0.f;
 
@@ -153,14 +153,14 @@ public class myDTW extends DTWHelper {
         tests = getFilesFromFolder(folderTest, "folder");
         int referencesLength = references.length;
         int testsLength = tests.length;
-
+        String dossiers = new String();
         for (int i = 0; i < testsLength; i++) {
             String[] testsFiles = new String[nbOrdre];
             testsFiles = getFilesFromFolder(folderTest+tests[i], "file");
             min = Float.MAX_VALUE;
             for (String testsFile : testsFiles) {
                 for (int j = 0; j < referencesLength; j++) {
-                    String pathFile = folderTest + "/" + tests[i] + "/" + testsFile;
+                    String pathFile = folderTest + tests[i] + "/" + testsFile;
                     String pathFolder = folderRef + references[j];
                     distance = distanceFolders(pathFile, pathFolder);
                     if (distance < min) {
@@ -173,6 +173,16 @@ public class myDTW extends DTWHelper {
             }
         }
 
+        for (String reference : references) {
+            System.out.println(reference);
+        }
+        System.out.println();
+        for (int i = 0; i < referencesLength; i++) {
+            for (int j = 0; j < testsLength; j++) {
+                System.out.print(matriceConf[i][j]+"    ");
+            }
+            System.out.println();
+        }
         return matriceConf;
     }
 }
